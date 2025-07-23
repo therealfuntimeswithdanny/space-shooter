@@ -110,6 +110,12 @@ except pygame.error:
     print("Failed to load sound file 'die.wav'. Make sure the file exists in the 'audio' folder.")
     sound3 = None  # Set to None to prevent errors later
 
+try:
+    sound4 = pygame.mixer.Sound("audio/fail.wav")
+except pygame.error:
+    print("Failed to load sound file 'die.wav'. Make sure the file exists in the 'audio' folder.")
+    sound4 = None  # Set to None to prevent errors later
+
 # --- Game Loop ---
 running = True
 while running:
