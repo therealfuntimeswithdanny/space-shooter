@@ -7,6 +7,10 @@ print('Loading pygame...')
 pygame.init()
 print('Pygame Loaded')
 print('')
+print('loading Pygame Mixer...')
+pygame.mixer.init()
+print('Pygame Mixer Loaded')
+print('')
 print('Loading game files...')
 print('')
 # Screen settings
@@ -83,7 +87,26 @@ enemies = []
 for _ in range(enemies_allowed):
     spawn_enemy()
 
-print('loading audio files')
+print('loading audio files...')
+#background music
+print('')
+print('loading background music...')
+try:
+    pygame.mixer.music.load("audio/music.mp3") # Make sure this path is correct
+    print("Background music 'music.mp3' loaded.")
+    print('loaded background music')
+    pygame.mixer.music.set_volume(0.5)  # Set volume (0.0 to 1.0)
+    pygame.mixer.music.play(-1)         # Play indefinitely (-1 means loop forever)
+except pygame.error as e:
+    print(f"Failed to load or play background music: {e}")
+print('')
+print('loading sound effects...')
+try:
+    backmusic = pygame.mixer.Sound("audio/gunshot.mp3")
+    print('loaded gunshot.mp3')
+except pygame.error:
+    print("Failed to load sound file 'gunshot.mp3'. Make sure the file exists in the 'audio' folder.")
+    backmusic = None  # Set to None to prevent errors later
 # Initialize mixer and load sound
 pygame.mixer.init()
 try:
@@ -135,6 +158,12 @@ while running:
             running = False
         
         # Shoot a bullet on key down
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if len(bullets) < bullets_allowed:
+                  bullet = pygame.Rect(player.centerx - bullet_width // 2, player.top, bullet_width, bullet_height)
+                  bullets.append(bullet)
+                  if sound1: # Only play if the sound was loaded successfully
+                      sound1.play()
         if event.type == pygame.KEYDOWN:
             if event.key in [pygame.K_UP, pygame.K_SPACE, pygame.K_w]:
                 if len(bullets) < bullets_allowed:
