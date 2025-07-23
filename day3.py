@@ -12,7 +12,7 @@ print('')
 # Screen settings
 WIDTH, HEIGHT = 1080, 720
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Basic Shooter (v0.1) (720p (1080x720) @ 60 FPS)")
+pygame.display.set_caption("Space Shooter (v0.1)")
 print('Set display size to 720p (1080x720)')
 
 # Clock
@@ -49,14 +49,7 @@ HIGHSCORE_FILE = 'highscore.txt'
 print('found highscore.txt')
 print('loaded High Score')
 print('')
-print('')
-print('Game files loaded')
-print('')
-print('')
-print('How to Play')
-print(' To move player right press: D or Right Arrow')
-print(' To move player left press: A or Left Arrow')
-print(' To shoot press: W, Space or Up Arrow')
+
 
 # --- Functions ---
 def load_high_score():
@@ -90,32 +83,46 @@ enemies = []
 for _ in range(enemies_allowed):
     spawn_enemy()
 
+print('loading audio files')
 # Initialize mixer and load sound
 pygame.mixer.init()
 try:
     sound1 = pygame.mixer.Sound("audio/gunshot.mp3")
+    print('loaded gunshot.mp3')
 except pygame.error:
     print("Failed to load sound file 'gunshot.mp3'. Make sure the file exists in the 'audio' folder.")
     sound1 = None  # Set to None to prevent errors later
 
 try:
     sound2 = pygame.mixer.Sound("audio/die.wav")
+    print('loaded die.wav')
 except pygame.error:
     print("Failed to load sound file 'die.wav'. Make sure the file exists in the 'audio' folder.")
     sound2 = None  # Set to None to prevent errors later
 
 try:
     sound3 = pygame.mixer.Sound("audio/fail.wav")
+    print('loaded fail.wav')
 except pygame.error:
-    print("Failed to load sound file 'die.wav'. Make sure the file exists in the 'audio' folder.")
+    print("Failed to load sound file 'fail.wav'. Make sure the file exists in the 'audio' folder.")
     sound3 = None  # Set to None to prevent errors later
 
 try:
-    sound4 = pygame.mixer.Sound("audio/fail.wav")
+    sound4 = pygame.mixer.Sound("audio/life.wav")
+    print('loaded life.wav')
 except pygame.error:
-    print("Failed to load sound file 'die.wav'. Make sure the file exists in the 'audio' folder.")
+    print("Failed to load sound file 'life.wav'. Make sure the file exists in the 'audio' folder.")
     sound4 = None  # Set to None to prevent errors later
 
+print('all audio files loaded')
+print('')
+print('Game files loaded')
+print('')
+print('')
+print('How to Play')
+print(' To move player right press: D or Right Arrow')
+print(' To move player left press: A or Left Arrow')
+print(' To shoot press: W, Space or Up Arrow')
 # --- Game Loop ---
 running = True
 while running:
@@ -162,6 +169,8 @@ while running:
             enemies.remove(enemy)
             spawn_enemy()
             lives -= 1
+            if sound4:
+               sound4.play()
             if lives <= 0:
                 running = False
 
@@ -184,13 +193,20 @@ while running:
     for enemy in enemies:
         pygame.draw.rect(screen, RED, enemy)
 
-    # Draw score and lives
+    # Draw score, lives, high score, and copyright
     score_text = font.render(f"Score: {score}", True, WHITE)
     lives_text = font.render(f"Lives: {lives}", True, WHITE)
     high_score_text = font.render(f"High Score: {high_score}", True, WHITE)
+    
+    # Corrected copyright text rendering and positioning
+    copyright_text = font.render("Copyright 2024-2028 Made by Danny UK", True, WHITE)
+
     screen.blit(score_text, (10, 10))
     screen.blit(lives_text, (WIDTH - 120, 10))
     screen.blit(high_score_text, (WIDTH // 2 - high_score_text.get_width() // 2, 10))
+    
+    # Position the copyright text in the bottom right with padding
+    screen.blit(copyright_text, (WIDTH - copyright_text.get_width() - 10, HEIGHT - copyright_text.get_height() - 10))
 
     pygame.display.flip()
 
