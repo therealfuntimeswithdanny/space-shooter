@@ -16,7 +16,7 @@ print('')
 # Screen settings
 WIDTH, HEIGHT = 1080, 720
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Space Shooter (v0.1)")
+pygame.display.set_caption("Space Shooter (v0.2)")
 print('Set display size to 720p (1080x720)')
 
 # Clock
@@ -38,7 +38,7 @@ print('Loaded fonts')
 # --- Game Variables ---
 player_width, player_height = 50, 30
 bullet_speed = -8
-bullet_width, bullet_height = 5, 10
+bullet_width, bullet_height = 5, 10 # <-- This defines bullet size
 bullets_allowed = 10
 enemy_width, enemy_height = 40, 30
 enemy_speed = 1
@@ -54,7 +54,39 @@ print('found highscore.txt')
 print('loaded High Score')
 print('')
 
+# --- Load Player Image ---
+# IMPORTANT: Replace 'assets/player_ship.png' with the actual path to your image file.
+# Make sure the image file exists in the specified directory.
+try:
+    player_image = pygame.image.load('assets/player_ship.png').convert_alpha()
+    # Scale the image to your desired player_width and player_height
+    player_image = pygame.transform.scale(player_image, (player_width, player_height))
+    print("Player image 'player_ship.png' loaded successfully.")
+except pygame.error as e:
+    print(f"Error loading player image: {e}")
+    print("Falling back to drawing a blue rectangle for the player.")
+    player_image = None # Set to None to indicate no image was loaded
+try:
+    bullet_image = pygame.image.load('assets/bullet.png').convert_alpha()
+    # Scale the bullet image to your desired bullet_width and bullet_height
+    bullet_image = pygame.transform.scale(bullet_image, (bullet_width, bullet_height))
+    print("Bullet image 'bullet.png' loaded successfully.")
+except pygame.error as e:
+    print(f"Error loading bullet image: {e}")
+    print("Falling back to drawing a white rectangle for bullets.")
+    bullet_image = None # Set to None to indicate no image was loaded
 
+
+try:
+    enemy_image = pygame.image.load('assets/enemy.png').convert_alpha()
+    # Scale the bullet image to your desired bullet_width and bullet_height
+    enemy_image = pygame.transform.scale(enemy_image, (enemy_width, enemy_height))
+    enemy_image = pygame.transform.flip(enemy_image, False, True)
+    print("Bullet image 'eneny.png' loaded successfully.")
+except pygame.error as e:
+    print(f"Error loading bullet image: {e}")
+    print("Falling back to drawing a white rectangle for bullets.")
+    bullet_image = None # Set to None to indicate no image was loaded
 # --- Functions ---
 def load_high_score():
     """Load high score from file."""
@@ -137,6 +169,13 @@ except pygame.error:
     print("Failed to load sound file 'life.wav'. Make sure the file exists in the 'audio' folder.")
     sound4 = None  # Set to None to prevent errors later
 
+try:
+    lvl10 = pygame.mixer.Sound("audio/lvl10.wav")
+    print('loaded lvl10.wav')
+except pygame.error:
+    print("Failed to load sound file 'lvl10.wav'. Make sure the file exists in the 'audio' folder.")
+    lvl10 = None  # Set to None to prevent errors later
+
 print('all audio files loaded')
 print('')
 print('Game files loaded')
@@ -160,10 +199,10 @@ while running:
         # Shoot a bullet on key down
         if event.type == pygame.MOUSEBUTTONDOWN:
             if len(bullets) < bullets_allowed:
-                  bullet = pygame.Rect(player.centerx - bullet_width // 2, player.top, bullet_width, bullet_height)
-                  bullets.append(bullet)
-                  if sound1: # Only play if the sound was loaded successfully
-                      sound1.play()
+                    bullet = pygame.Rect(player.centerx - bullet_width // 2, player.top, bullet_width, bullet_height)
+                    bullets.append(bullet)
+                    if sound1: # Only play if the sound was loaded successfully
+                        sound1.play()
         if event.type == pygame.KEYDOWN:
             if event.key in [pygame.K_UP, pygame.K_SPACE, pygame.K_w]:
                 if len(bullets) < bullets_allowed:
@@ -215,12 +254,31 @@ while running:
                     sound2.play()
                 break
 
-    # Draw player, bullets, enemies
-    pygame.draw.rect(screen, BLUE, player)
+    # --- Draw player, bullets, enemies ---
+    # Draw the player image if loaded, otherwise draw a blue rectangle
+    if player_image:
+        screen.blit(player_image, player)
+    else:
+        pygame.draw.rect(screen, BLUE, player) # Fallback to drawing a rectangle
+
     for bullet in bullets:
-        pygame.draw.rect(screen, WHITE, bullet)
+       # --- Draw player, bullets, enemies ---
+    # Draw the player image if loaded, otherwise draw a blue rectangle
+     if player_image:
+        screen.blit(player_image, player)
+     else:
+        pygame.draw.rect(screen, BLUE, player) # Fallback to drawing a rectangle
+
+    for bullet in bullets:
+        if bullet_image: # Check if the bullet image was loaded successfully
+            screen.blit(bullet_image, bullet) # Draw the bullet image
+        else:
+            pygame.draw.rect(screen, WHITE, bullet) # Fallback: Draw a white rectangle
     for enemy in enemies:
-        pygame.draw.rect(screen, RED, enemy)
+        if enemy_image: # Check if the enemy image was loaded successfully
+            screen.blit(enemy_image, enemy) # Draw the enemy image
+        else:
+            pygame.draw.rect(screen, RED, enemy) # Fallback: Draw a red rectangle
 
     # Draw score, lives, high score, and copyright
     score_text = font.render(f"Score: {score}", True, WHITE)
@@ -228,7 +286,7 @@ while running:
     high_score_text = font.render(f"High Score: {high_score}", True, WHITE)
     
     # Corrected copyright text rendering and positioning
-    copyright_text = font.render("Copyright 2024-2028 Made by Danny UK", True, WHITE)
+    copyright_text = font.render("Version 0.2", True, WHITE)
 
     screen.blit(score_text, (10, 10))
     screen.blit(lives_text, (WIDTH - 120, 10))
@@ -241,6 +299,10 @@ while running:
 
 # --- Game Over Screen ---
 screen.fill(BLACK)
+#play sound effect for passing lvl 10
+if score:  10
+if lvl10: # Only play if the sound was loaded successfully
+    lvl10.play()
 
 # Check for a new high score
 if score > high_score:
