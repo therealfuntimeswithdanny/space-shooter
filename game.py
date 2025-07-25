@@ -53,7 +53,6 @@ def check_for_updates():
         print(f"An unexpected error occurred during update check: {e}")
         return False, None
 
-# ... (rest of your game code, e.g., load_high_score, spawn_enemy functions) ...
 # --- Initialization and Setup ---
 print('Loading pygame...')
 pygame.init()
@@ -68,7 +67,7 @@ print('')
 # Screen settings
 WIDTH, HEIGHT = 1080, 720
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Space Shooter (v1.1)")
+pygame.display.set_caption("Space Shooter v1.2.1")
 print('Set display size to 720p (1080x720)')
 
 # Clock
@@ -82,6 +81,7 @@ RED = (255, 0, 0)
 BLUE = (0, 100, 255)
 BLACK = (0, 0, 0)
 YELLOW = (255, 255, 0) # Define YELLOW color
+GREEN = (0, 255, 0) # Define GREEN for bounty enemy
 print('Set colors')
 
 # Font
@@ -94,10 +94,10 @@ bullet_speed = -8
 bullet_width, bullet_height = 5, 10 # <-- This defines bullet size
 bullets_allowed = 10
 enemy_width, enemy_height = 40, 30
-enemy1_width, enemy1_height = 40, 30
+bounty_enemy_width, bounty_enemy_height = 50, 40 # Slightly larger for distinctiveness
 enemy_speed = 1
-enemies_allowed = 2 # Initial number of enemies
-enemies_allowed_lvl100 = 3 # This can remain for separate enemy type if desired
+bounty_enemy_speed = 2 # Bounty enemy might move at a different speed
+enemies_allowed = 2 # Initial number of regular enemies
 score = 0
 lives = 3
 high_score = 0  # Initialize high score
@@ -147,15 +147,22 @@ except pygame.error as e:
     print(f"Error loading enemy image: {e}")
     print("Falling back to drawing a red rectangle for enemies.")
     enemy_image = None
+
+# --- NEW: Load Bounty Enemy Image ---
 try:
-    enemy1_image = pygame.image.load(resource_path('assets/enemy.png')).convert_alpha()
-    enemy1_image = pygame.transform.scale(enemy1_image, (enemy1_width, enemy1_height))
-    enemy1_image = pygame.transform.flip(enemy1_image, False, True)
-    print("Enemy image 'enemy.png' loaded successfully.")
+    # Assuming you might want a different image, or reuse and re-color
+    bounty_enemy_image = pygame.image.load(resource_path('assets/background/space-ship.gif')).convert_alpha() # Using same image for now
+    bounty_enemy_image = pygame.transform.scale(bounty_enemy_image, (bounty_enemy_width, bounty_enemy_height))
+    bounty_enemy_image = pygame.transform.flip(bounty_enemy_image, False, True)
+    # You might want to apply a color tint or load a completely different image for distinction
+    # For example, to tint:
+    # bounty_enemy_image.fill((0, 255, 0, 255), special_flags=pygame.BLEND_RGBA_MULT) # Tints green
+    print("Bounty enemy image 'gspace-ship.gif loaded successfully (can be visually distinct).")
 except pygame.error as e:
-    print(f"Error loading enemy image: {e}")
-    print("Falling back to drawing a red rectangle for enemies.")
-    enemy1_image = None
+    print(f"Error loading bounty enemy image: {e}")
+    print("Falling back to drawing a green rectangle for bounty enemies.")
+    bounty_enemy_image = None
+
 try:
     background_image = pygame.image.load(resource_path('assets/background/bg2.png')).convert_alpha()
     print("Background image 'background.png' loaded successfully.")
@@ -178,32 +185,32 @@ def save_high_score(new_score):
         file.write(str(new_score))
 
 def spawn_enemy():
-    """Create a new enemy and add it to the enemies list."""
+    """Create a new regular enemy and add it to the enemies list."""
     x = random.randint(0, WIDTH - enemy_width)
     y = random.randint(-150, -40)
-    enemy = pygame.Rect(x, y, enemy_width, enemy_height)
-    enemies.append(enemy)
+    # Store enemy as a dictionary to differentiate types if needed, or use separate lists
+    enemy_rect = pygame.Rect(x, y, enemy_width, enemy_height)
+    enemies.append({'rect': enemy_rect, 'type': 'regular'})
 
-def spawn_enemy1():
-    """Create a new enemy and add it to the enemies list."""
-    x = random.randint(0, WIDTH - enemy1_width)
+# --- NEW: Function to spawn a Bounty Enemy ---
+def spawn_bounty_enemy():
+    """Create a new bounty enemy and add it to the enemies list."""
+    x = random.randint(0, WIDTH - bounty_enemy_width)
     y = random.randint(-150, -40)
-    enemy1 = pygame.Rect(x, y, enemy1_width, enemy1_height)
-    enemies.append(enemy1)
+    bounty_enemy_rect = pygame.Rect(x, y, bounty_enemy_width, bounty_enemy_height)
+    enemies.append({'rect': bounty_enemy_rect, 'type': 'bounty'})
 
 # --- Main Game Setup ---
 high_score = load_high_score()
 player = pygame.Rect(WIDTH // 2 - player_width // 2, HEIGHT - 60, player_width, player_height)
 player_speed = 5
 bullets = []
-enemies = []
+enemies = [] # This list will now hold dictionaries: {'rect': rect_obj, 'type': 'regular'/'bounty'}
 
 # --- Initial enemy spawn based on enemies_allowed ---
 for _ in range(enemies_allowed):
     spawn_enemy()
 
-for _ in range(enemies_allowed_lvl100):
-    spawn_enemy1()
 print('loading audio files...')
 #background music
 print('')
@@ -246,6 +253,14 @@ except pygame.error as e:
     print(f"Failed to load sound file 'life.wav': {e}. Make sure the file exists in the 'audio' folder.")
     sound4 = None
 
+# --- NEW: Sound for bounty enemy hit ---
+try:
+    sound_bounty_hit = pygame.mixer.Sound(resource_path("audio/powerup.wav")) # Assuming you have a powerup sound
+    print('loaded powerup.wav for bounty enemy hit.')
+except pygame.error as e:
+    print(f"Failed to load sound file 'powerup.wav': {e}. Make sure the file exists in the 'audio' folder.")
+    sound_bounty_hit = None
+
 
 print('all audio files loaded')
 print('')
@@ -259,7 +274,16 @@ print(' To shoot press: W, Space or Up Arrow')
 print(' To open GitHub releases page for updates: Press U') # Added instruction
 
 # --- New variable to track score thresholds for enemy increases ---
-next_enemy_increase_score = 20 # Score at which the next enemy will be added
+next_enemy_increase_score = 30 # Score at which the next regular enemy will be added
+
+# --- NEW: Bounty enemy spawn management ---
+bounty_spawn_points = [
+    (75, 85),
+    (125, 135),
+    (200, 210),
+    (400, float('inf')) # Use infinity for "400+"
+]
+bounty_spawned_at_score = [] # To keep track of points where bounty enemy has spawned
 
 # --- Game Loop ---
 running = True
@@ -314,33 +338,71 @@ while running:
             bullets.remove(bullet)
 
     # Move enemies
-    for enemy in enemies[:]:
-        enemy.y += enemy_speed
-        if enemy.top > HEIGHT:
-            enemies.remove(enemy)
-            spawn_enemy() # This still spawns one enemy when one goes off-screen
-            lives -= 1
-            if sound4:
-               sound4.play()
-            if lives <= 0:
-                running = False
-            
-    # --- New logic for incrementally increasing enemy count ---
+    for enemy_data in enemies[:]:
+        enemy_rect = enemy_data['rect']
+        enemy_type = enemy_data['type']
+
+        if enemy_type == 'regular':
+            enemy_rect.y += enemy_speed
+            if enemy_rect.top > HEIGHT:
+                enemies.remove(enemy_data)
+                spawn_enemy() # Respawn regular enemy if it goes off-screen
+                lives -= 1
+                if sound4:
+                   sound4.play()
+                if lives <= 0:
+                    running = False
+        elif enemy_type == 'bounty':
+            enemy_rect.y += bounty_enemy_speed # Use bounty specific speed
+            if enemy_rect.top > HEIGHT:
+                enemies.remove(enemy_data)
+                # Bounty enemies do NOT respawn automatically when they go off-screen
+                # They are tied to specific score ranges.
+
+    # --- Logic for incrementally increasing regular enemy count ---
+    # This remains separate for regular enemies
     if score >= next_enemy_increase_score:
-        enemies_allowed += 1 # Increase the *total* allowed enemies by 1
-        spawn_enemy() # Spawn one more enemy immediately
-        next_enemy_increase_score += 5 # Set the next score threshold
+        # Check if we are not at 400+ score and if the current enemy count is reasonable
+        # This prevents an infinite increase of regular enemies if you want a cap
+        current_regular_enemies = sum(1 for e in enemies if e['type'] == 'regular')
+        if current_regular_enemies < 10: # Example cap for regular enemies
+            spawn_enemy() # Spawn one more regular enemy immediately
+            next_enemy_increase_score += 5 # Set the next score threshold for regular enemies
+
+
+    # --- NEW: Bounty enemy spawning logic ---
+    for start_score, end_score in bounty_spawn_points:
+        if start_score <= score <= end_score:
+            # Check if a bounty enemy has already spawned for this score range
+            # and if there are currently no bounty enemies on screen
+            if (start_score, end_score) not in bounty_spawned_at_score and \
+               not any(e['type'] == 'bounty' for e in enemies):
+                spawn_bounty_enemy()
+                bounty_spawned_at_score.append((start_score, end_score))
+                print(f"Bounty enemy spawned at score {score}!")
+            break # Only try to spawn one bounty enemy at a time based on range
 
     # Bullet-enemy collision
     for bullet in bullets[:]:
-        for enemy in enemies[:]:
-            if bullet.colliderect(enemy):
+        for enemy_data in enemies[:]:
+            enemy_rect = enemy_data['rect']
+            enemy_type = enemy_data['type']
+
+            if bullet.colliderect(enemy_rect):
                 bullets.remove(bullet)
-                enemies.remove(enemy)
-                spawn_enemy() # This respawns the one that was hit
-                score += 1
-                if sound2:
-                    sound2.play()
+                enemies.remove(enemy_data) # Remove the hit enemy
+
+                if enemy_type == 'regular':
+                    spawn_enemy() # Respawn regular enemy
+                    score += 1
+                    if sound2:
+                        sound2.play()
+                elif enemy_type == 'bounty':
+                    score += 20 # Score goes up by 20
+                    lives += 2 # Gain 2 extra lives
+                    if sound_bounty_hit: # Play a distinct sound for bounty enemy
+                        sound_bounty_hit.play()
+                    print(f"Bounty enemy defeated! Score +20, Lives +2. Current Lives: {lives}")
                 break
 
     # --- Draw player, bullets, enemies ---
@@ -354,11 +416,24 @@ while running:
             screen.blit(bullet_image, bullet)
         else:
             pygame.draw.rect(screen, WHITE, bullet)
-    for enemy in enemies:
-        if enemy_image:
-            screen.blit(enemy_image, enemy)
-        else:
-            pygame.draw.rect(screen, RED, enemy)
+            
+    for enemy_data in enemies:
+        enemy_rect = enemy_data['rect']
+        enemy_type = enemy_data['type']
+        
+        if enemy_type == 'regular':
+            if enemy_image:
+                screen.blit(enemy_image, enemy_rect)
+            else:
+                pygame.draw.rect(screen, RED, enemy_rect)
+        elif enemy_type == 'bounty':
+            if bounty_enemy_image:
+                screen.blit(bounty_enemy_image, enemy_rect)
+                # You can also draw a text overlay on bounty enemy for distinction
+                bounty_text = font.render("BONUS", True, YELLOW)
+                screen.blit(bounty_text, (enemy_rect.x + (bounty_enemy_width - bounty_text.get_width()) // 2, enemy_rect.y + (bounty_enemy_height - bounty_text.get_height()) // 2))
+            else:
+                pygame.draw.rect(screen, GREEN, enemy_rect) # Draw green if no image
 
     # Draw score, lives, high score
     score_text = font.render(f"Score: {score}", True, WHITE)
