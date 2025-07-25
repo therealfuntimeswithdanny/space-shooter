@@ -1,9 +1,9 @@
 import pygame
 import random
 import sys
-import os # Import os for path manipulation
+import os # <--- ADD THIS LINE
 
-# --- Add resource_path function here ---
+# --- ADD THIS FUNCTION START ---
 def resource_path(relative_path):
     """ Get absolute path to resource, works for dev and for PyInstaller """
     try:
@@ -13,6 +13,10 @@ def resource_path(relative_path):
         # For development, use the current directory
         base_path = os.path.abspath(".")
     return os.path.join(base_path, relative_path)
+# --- ADD THIS FUNCTION END ---
+
+# --- Initialization and Setup ---
+# ... (rest of your existing code) ...
 
 # --- Initialization and Setup ---
 print('Loading pygame...')

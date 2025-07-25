@@ -1,3 +1,0 @@
-([('game',
-   '/Users/danny/Documents/Documents - iMac/space-shooter/dist/game',
-   'EXECUTABLE')],)
