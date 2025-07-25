@@ -3,6 +3,7 @@ import random
 import sys
 import os
 import requests
+import webbrowser # Import the webbrowser module
 
 # --- ADD THIS FUNCTION START ---
 def resource_path(relative_path):
@@ -16,7 +17,7 @@ def resource_path(relative_path):
     return os.path.join(base_path, relative_path)
 # --- ADD THIS FUNCTION END ---
 # --- ADD THESE LINES ---
-CURRENT_APP_VERSION = "1.1" # <--- IMPORTANT: MATCH THIS TO YOUR CURRENT RELEASE VERSION
+CURRENT_APP_VERSION = "1.2" # <--- IMPORTANT: MATCH THIS TO YOUR CURRENT RELEASE VERSION
 # REPLACE THESE URLs with your actual GitHub links!
 GITHUB_VERSION_URL = "https://raw.githubusercontent.com/therealfuntimeswithdanny/space-shooter/main/version.txt"
 GITHUB_RELEASES_PAGE_URL = "https://github.com/therealfuntimeswithdanny/space-shooter/releases"
@@ -80,6 +81,7 @@ WHITE = (255, 255, 255)
 RED = (255, 0, 0)
 BLUE = (0, 100, 255)
 BLACK = (0, 0, 0)
+YELLOW = (255, 255, 0) # Define YELLOW color
 print('Set colors')
 
 # Font
@@ -254,6 +256,7 @@ print('How to Play')
 print(' To move player right press: D or Right Arrow')
 print(' To move player left press: A or Left Arrow')
 print(' To shoot press: W, Space or Up Arrow')
+print(' To open GitHub releases page for updates: Press U') # Added instruction
 
 # --- New variable to track score thresholds for enemy increases ---
 next_enemy_increase_score = 20 # Score at which the next enemy will be added
@@ -262,24 +265,6 @@ next_enemy_increase_score = 20 # Score at which the next enemy will be added
 running = True
 while running:
     clock.tick(FPS)
-
-    # ... (inside your while running: loop) ...
-
-# Player movement (held keys)
-# ... (existing player movement and bullet/enemy logic) ...
-
-# --- ADD THIS TO YOUR DRAWING SECTION, BEFORE pygame.display.flip() ---
-    if update_available and (pygame.time.get_ticks() - update_message_start_time) < update_message_display_time:
-        update_text_line1 = font.render("NEW VERSION AVAILABLE!", True, (255, 255, 0)) # Yellow text
-        update_text_line2 = font.render(f"Download {latest_version} from GitHub!", True, (255, 255, 0))
-
-        screen.blit(update_text_line1, (WIDTH // 2 - update_text_line1.get_width() // 2, HEIGHT // 2 - 80))
-        screen.blit(update_text_line2, (WIDTH // 2 - update_text_line2.get_width() // 2, HEIGHT // 2 - 40))
-    # --- END ADD ---
-
-    pygame.display.flip()
-
-    # ... (rest of your game loop) ...
 
     if background_image:
         bg_width = background_image.get_width()
@@ -302,6 +287,13 @@ while running:
                 bullets.append(bullet)
                 if sound1:
                     sound1.play()
+        
+        # --- NEW: Handle 'U' key press to open GitHub page ---
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_u:
+                print(f"Opening GitHub releases page: {GITHUB_RELEASES_PAGE_URL}")
+                webbrowser.open_new_tab(GITHUB_RELEASES_PAGE_URL)
+        # --- END NEW ---
 
     # Player movement (held keys)
     keys = pygame.key.get_pressed()
@@ -368,18 +360,23 @@ while running:
         else:
             pygame.draw.rect(screen, RED, enemy)
 
-    # Draw score, lives, high score, and copyright
+    # Draw score, lives, high score
     score_text = font.render(f"Score: {score}", True, WHITE)
     lives_text = font.render(f"Lives: {lives}", True, WHITE)
     high_score_text = font.render(f"High Score: {high_score}", True, WHITE)
-
-    copyright_text = font.render("Version 1", True, WHITE)
 
     screen.blit(score_text, (10, 10))
     screen.blit(lives_text, (WIDTH - 120, 10))
     screen.blit(high_score_text, (WIDTH // 2 - high_score_text.get_width() // 2, 10))
 
-    screen.blit(copyright_text, (WIDTH - copyright_text.get_width() - 10, HEIGHT - copyright_text.get_height() - 10))
+    # --- MODIFIED: Conditional drawing for update message or copyright ---
+    if update_available:
+        update_text = font.render(f"UPDATE AVAILABLE! Press 'U' to go to GitHub!", True, YELLOW)
+        screen.blit(update_text, (WIDTH - update_text.get_width() - 10, HEIGHT - update_text.get_height() - 10))
+    else:
+        copyright_text = font.render(f"Version {CURRENT_APP_VERSION}", True, WHITE)
+        screen.blit(copyright_text, (WIDTH - copyright_text.get_width() - 10, HEIGHT - copyright_text.get_height() - 10))
+    # --- END MODIFIED SECTION ---
 
     pygame.display.flip()
 
