@@ -54,6 +54,46 @@
   ('calendar',
    '/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/calendar.py',
    'PYMODULE'),
+  ('certifi',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/certifi/__init__.py',
+   'PYMODULE'),
+  ('certifi.core',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/certifi/core.py',
+   'PYMODULE'),
+  ('charset_normalizer',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/charset_normalizer/__init__.py',
+   'PYMODULE'),
+  ('charset_normalizer.api',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/charset_normalizer/api.py',
+   'PYMODULE'),
+  ('charset_normalizer.cd',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/charset_normalizer/cd.py',
+   'PYMODULE'),
+  ('charset_normalizer.constant',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/charset_normalizer/constant.py',
+   'PYMODULE'),
+  ('charset_normalizer.legacy',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/charset_normalizer/legacy.py',
+   'PYMODULE'),
+  ('charset_normalizer.models',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/charset_normalizer/models.py',
+   'PYMODULE'),
+  ('charset_normalizer.utils',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/charset_normalizer/utils.py',
+   'PYMODULE'),
+  ('charset_normalizer.version',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/charset_normalizer/version.py',
+   'PYMODULE'),
   ('cmd',
    '/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/cmd.py',
    'PYMODULE'),
@@ -219,6 +259,9 @@
   ('hashlib',
    '/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/hashlib.py',
    'PYMODULE'),
+  ('hmac',
+   '/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/hmac.py',
+   'PYMODULE'),
   ('html',
    '/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/html/__init__.py',
    'PYMODULE'),
@@ -234,8 +277,35 @@
   ('http.cookiejar',
    '/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/http/cookiejar.py',
    'PYMODULE'),
+  ('http.cookies',
+   '/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/http/cookies.py',
+   'PYMODULE'),
   ('http.server',
    '/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/http/server.py',
+   'PYMODULE'),
+  ('idna',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/idna/__init__.py',
+   'PYMODULE'),
+  ('idna.core',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/idna/core.py',
+   'PYMODULE'),
+  ('idna.idnadata',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/idna/idnadata.py',
+   'PYMODULE'),
+  ('idna.intranges',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/idna/intranges.py',
+   'PYMODULE'),
+  ('idna.package_data',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/idna/package_data.py',
+   'PYMODULE'),
+  ('idna.uts46data',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/idna/uts46data.py',
    'PYMODULE'),
   ('imp',
    '/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imp.py',
@@ -249,6 +319,9 @@
   ('importlib._bootstrap_external',
    '/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/importlib/_bootstrap_external.py',
    'PYMODULE'),
+  ('importlib._common',
+   '/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/importlib/_common.py',
+   'PYMODULE'),
   ('importlib.abc',
    '/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/importlib/abc.py',
    'PYMODULE'),
@@ -258,11 +331,29 @@
   ('importlib.metadata',
    '/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/importlib/metadata.py',
    'PYMODULE'),
+  ('importlib.resources',
+   '/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/importlib/resources.py',
+   'PYMODULE'),
   ('importlib.util',
    '/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/importlib/util.py',
    'PYMODULE'),
   ('inspect',
    '/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/inspect.py',
+   'PYMODULE'),
+  ('ipaddress',
+   '/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/ipaddress.py',
+   'PYMODULE'),
+  ('json',
+   '/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/json/__init__.py',
+   'PYMODULE'),
+  ('json.decoder',
+   '/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/json/decoder.py',
+   'PYMODULE'),
+  ('json.encoder',
+   '/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/json/encoder.py',
+   'PYMODULE'),
+  ('json.scanner',
+   '/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/json/scanner.py',
    'PYMODULE'),
   ('logging',
    '/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/logging/__init__.py',
@@ -510,6 +601,74 @@
   ('random',
    '/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/random.py',
    'PYMODULE'),
+  ('requests',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/requests/__init__.py',
+   'PYMODULE'),
+  ('requests.__version__',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/requests/__version__.py',
+   'PYMODULE'),
+  ('requests._internal_utils',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/requests/_internal_utils.py',
+   'PYMODULE'),
+  ('requests.adapters',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/requests/adapters.py',
+   'PYMODULE'),
+  ('requests.api',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/requests/api.py',
+   'PYMODULE'),
+  ('requests.auth',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/requests/auth.py',
+   'PYMODULE'),
+  ('requests.certs',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/requests/certs.py',
+   'PYMODULE'),
+  ('requests.compat',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/requests/compat.py',
+   'PYMODULE'),
+  ('requests.cookies',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/requests/cookies.py',
+   'PYMODULE'),
+  ('requests.exceptions',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/requests/exceptions.py',
+   'PYMODULE'),
+  ('requests.hooks',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/requests/hooks.py',
+   'PYMODULE'),
+  ('requests.models',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/requests/models.py',
+   'PYMODULE'),
+  ('requests.packages',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/requests/packages.py',
+   'PYMODULE'),
+  ('requests.sessions',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/requests/sessions.py',
+   'PYMODULE'),
+  ('requests.status_codes',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/requests/status_codes.py',
+   'PYMODULE'),
+  ('requests.structures',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/requests/structures.py',
+   'PYMODULE'),
+  ('requests.utils',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/requests/utils.py',
+   'PYMODULE'),
   ('runpy',
    '/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/runpy.py',
    'PYMODULE'),
@@ -590,6 +749,150 @@
    'PYMODULE'),
   ('urllib.response',
    '/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/urllib/response.py',
+   'PYMODULE'),
+  ('urllib3',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/urllib3/__init__.py',
+   'PYMODULE'),
+  ('urllib3._base_connection',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/urllib3/_base_connection.py',
+   'PYMODULE'),
+  ('urllib3._collections',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/urllib3/_collections.py',
+   'PYMODULE'),
+  ('urllib3._request_methods',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/urllib3/_request_methods.py',
+   'PYMODULE'),
+  ('urllib3._version',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/urllib3/_version.py',
+   'PYMODULE'),
+  ('urllib3.connection',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/urllib3/connection.py',
+   'PYMODULE'),
+  ('urllib3.connectionpool',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/urllib3/connectionpool.py',
+   'PYMODULE'),
+  ('urllib3.contrib',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/urllib3/contrib/__init__.py',
+   'PYMODULE'),
+  ('urllib3.contrib.emscripten',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/urllib3/contrib/emscripten/__init__.py',
+   'PYMODULE'),
+  ('urllib3.contrib.emscripten.connection',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/urllib3/contrib/emscripten/connection.py',
+   'PYMODULE'),
+  ('urllib3.contrib.emscripten.fetch',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/urllib3/contrib/emscripten/fetch.py',
+   'PYMODULE'),
+  ('urllib3.contrib.emscripten.request',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/urllib3/contrib/emscripten/request.py',
+   'PYMODULE'),
+  ('urllib3.contrib.emscripten.response',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/urllib3/contrib/emscripten/response.py',
+   'PYMODULE'),
+  ('urllib3.contrib.pyopenssl',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/urllib3/contrib/pyopenssl.py',
+   'PYMODULE'),
+  ('urllib3.contrib.socks',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/urllib3/contrib/socks.py',
+   'PYMODULE'),
+  ('urllib3.exceptions',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/urllib3/exceptions.py',
+   'PYMODULE'),
+  ('urllib3.fields',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/urllib3/fields.py',
+   'PYMODULE'),
+  ('urllib3.filepost',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/urllib3/filepost.py',
+   'PYMODULE'),
+  ('urllib3.http2',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/urllib3/http2/__init__.py',
+   'PYMODULE'),
+  ('urllib3.http2.connection',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/urllib3/http2/connection.py',
+   'PYMODULE'),
+  ('urllib3.http2.probe',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/urllib3/http2/probe.py',
+   'PYMODULE'),
+  ('urllib3.poolmanager',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/urllib3/poolmanager.py',
+   'PYMODULE'),
+  ('urllib3.response',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/urllib3/response.py',
+   'PYMODULE'),
+  ('urllib3.util',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/urllib3/util/__init__.py',
+   'PYMODULE'),
+  ('urllib3.util.connection',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/urllib3/util/connection.py',
+   'PYMODULE'),
+  ('urllib3.util.proxy',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/urllib3/util/proxy.py',
+   'PYMODULE'),
+  ('urllib3.util.request',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/urllib3/util/request.py',
+   'PYMODULE'),
+  ('urllib3.util.response',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/urllib3/util/response.py',
+   'PYMODULE'),
+  ('urllib3.util.retry',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/urllib3/util/retry.py',
+   'PYMODULE'),
+  ('urllib3.util.ssl_',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/urllib3/util/ssl_.py',
+   'PYMODULE'),
+  ('urllib3.util.ssl_match_hostname',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/urllib3/util/ssl_match_hostname.py',
+   'PYMODULE'),
+  ('urllib3.util.ssltransport',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/urllib3/util/ssltransport.py',
+   'PYMODULE'),
+  ('urllib3.util.timeout',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/urllib3/util/timeout.py',
+   'PYMODULE'),
+  ('urllib3.util.url',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/urllib3/util/url.py',
+   'PYMODULE'),
+  ('urllib3.util.util',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/urllib3/util/util.py',
+   'PYMODULE'),
+  ('urllib3.util.wait',
+   '/Users/danny/Documents/Documents - '
+   'iMac/space-shooter/venv/lib/python3.9/site-packages/urllib3/util/wait.py',
    'PYMODULE'),
   ('uu',
    '/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/uu.py',
