@@ -18,8 +18,8 @@ def resource_path(relative_path):
 # --- ADD THESE LINES ---
 CURRENT_APP_VERSION = "1.1" # <--- IMPORTANT: MATCH THIS TO YOUR CURRENT RELEASE VERSION
 # REPLACE THESE URLs with your actual GitHub links!
-GITHUB_VERSION_URL = "https://raw.githubusercontent.com/therealfuntimeswithdanny/space-shooter-game/main/version.txt"
-GITHUB_RELEASES_PAGE_URL = "https://github.com/therealfuntimeswithdanny/space-shooter-game/releases"
+GITHUB_VERSION_URL = "https://raw.githubusercontent.com/therealfuntimeswithdanny/space-shooter/main/version.txt"
+GITHUB_RELEASES_PAGE_URL = "https://github.com/therealfuntimeswithdanny/space-shooter/releases"
 # --- END ADD ---  
 # ... (resource_path function and other initial setup) ...
 
