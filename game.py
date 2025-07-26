@@ -16,42 +16,37 @@ def resource_path(relative_path):
         base_path = os.path.abspath(".")
     return os.path.join(base_path, relative_path)
 # --- ADD THIS FUNCTION END ---
+
 # --- ADD THESE LINES ---
-CURRENT_APP_VERSION = "1.2" # <--- IMPORTANT: MATCH THIS TO YOUR CURRENT RELEASE VERSION
+CURRENT_APP_VERSION = "1.2.2" # <--- IMPORTANT: MATCH THIS TO YOUR CURRENT RELEASE VERSION
 # REPLACE THESE URLs with your actual GitHub links!
 GITHUB_VERSION_URL = "https://raw.githubusercontent.com/therealfuntimeswithdanny/space-shooter/main/version.txt"
 GITHUB_RELEASES_PAGE_URL = "https://github.com/therealfuntimeswithdanny/space-shooter/releases"
-# --- END ADD ---  
-# ... (resource_path function and other initial setup) ...
+# --- END ADD ---
 
-def check_for_updates():
-    """Checks for a new version of the game available on GitHub."""
-    print("Checking for updates...")
-    try:
-        # Use a timeout to prevent the game from hanging if there's no internet
-        response = requests.get(GITHUB_VERSION_URL, timeout=5)
-        response.raise_for_status() # Raise an exception for HTTP errors (4xx or 5xx)
-        latest_version = response.text.strip()
+# --- NEW: High Score Path Determination ---
+def get_high_score_path():
+    """
+    Determines the appropriate path for the high score file based on the OS.
+    Ensures the directory exists.
+    """
+    app_name = "SpaceShooter" # Your game's name
 
-        if latest_version != CURRENT_APP_VERSION:
-            print(f"New version available! Your version: {CURRENT_APP_VERSION}, Latest: {latest_version}")
-            print(f"Download the new version at: {GITHUB_RELEASES_PAGE_URL}")
-            return True, latest_version # Returns (True, "1.0.0") if update needed
-        else:
-            print("Game is up to date.")
-            return False, None # Returns (False, None) if no update needed
-    except requests.exceptions.ConnectionError:
-        print("Could not check for updates: No internet connection.")
-        return False, None
-    except requests.exceptions.Timeout:
-        print("Could not check for updates: Connection timed out.")
-        return False, None
-    except requests.exceptions.RequestException as e:
-        print(f"An error occurred while checking for updates: {e}")
-        return False, None
-    except Exception as e:
-        print(f"An unexpected error occurred during update check: {e}")
-        return False, None
+    if sys.platform == "win32":
+        # Windows: %APPDATA% (e.g., C:\Users\YourUser\AppData\Roaming\SpaceShooter)
+        path = os.path.join(os.getenv('APPDATA'), app_name)
+    elif sys.platform == "darwin":
+        # macOS: ~/Library/Application Support/ (e.g., /Users/YourUser/Library/Application Support/SpaceShooter)
+        path = os.path.join(os.path.expanduser('~'), 'Library', 'Application Support', app_name)
+    else:
+        # Linux/Unix: ~/.local/share/ (e.g., /home/YourUser/.local/share/SpaceShooter)
+        path = os.path.join(os.path.expanduser('~'), '.local', 'share', app_name)
+
+    # Create the directory if it doesn't exist
+    os.makedirs(path, exist_ok=True)
+    return os.path.join(path, 'highscore.txt')
+
+HIGHSCORE_FILE_PATH = get_high_score_path() # Store the full, persistent path
 
 # --- Initialization and Setup ---
 print('Loading pygame...')
@@ -96,20 +91,46 @@ bullets_allowed = 10
 enemy_width, enemy_height = 40, 30
 bounty_enemy_width, bounty_enemy_height = 50, 40 # Slightly larger for distinctiveness
 enemy_speed = 1
-bounty_enemy_speed = 2 # Bounty enemy might move at a different speed
-enemies_allowed = 2 # Initial number of regular enemies
+bounty_enemy_speed = 5 # Bounty enemy might move at a different speed
+enemies_allowed = 3 # Initial number of regular enemies
 score = 0
 lives = 3
 high_score = 0  # Initialize high score
 print('')
-print('loading High Score from highscore.txt')
-# High score file name
-HIGHSCORE_FILE = 'highscore.txt'
-print('found highscore.txt')
-print('loaded High Score')
+print(f'Loading High Score from: {HIGHSCORE_FILE_PATH}') # Updated print statement
+print('Loaded High Score')
 print('')
 
 # --- ADD THIS SECTION FOR UPDATE NOTIFICATION ---
+def check_for_updates():
+    """Checks for a new version of the game available on GitHub."""
+    print("Checking for updates...")
+    try:
+        # Use a timeout to prevent the game from hanging if there's no internet
+        response = requests.get(GITHUB_VERSION_URL, timeout=5)
+        response.raise_for_status() # Raise an exception for HTTP errors (4xx or 5xx)
+        latest_version = response.text.strip()
+
+        if latest_version != CURRENT_APP_VERSION:
+            print(f"New version available! Your version: {CURRENT_APP_VERSION}, Latest: {latest_version}")
+            print(f"Download the new version at: {GITHUB_RELEASES_PAGE_URL}")
+            return True, latest_version # Returns (True, "1.0.0") if update needed
+        else:
+            print("Game is up to date.")
+            return False, None # Returns (False, None) if no update needed
+    except requests.exceptions.ConnectionError:
+        print("Could not check for updates: No internet connection.")
+        return False, None
+    except requests.exceptions.Timeout:
+        print("Could not check for updates: Connection timed out.")
+        return False, None
+    except requests.exceptions.RequestException as e:
+        print(f"An error occurred while checking for updates: {e}")
+        return False, None
+    except Exception as e:
+        print(f"An unexpected error occurred during update check: {e}")
+        return False, None
+
 update_available, latest_version = check_for_updates()
 update_message_display_time = 3000 # Milliseconds to show the message (e.g., 3 seconds)
 update_message_start_time = 0
@@ -150,13 +171,9 @@ except pygame.error as e:
 
 # --- NEW: Load Bounty Enemy Image ---
 try:
-    # Assuming you might want a different image, or reuse and re-color
     bounty_enemy_image = pygame.image.load(resource_path('assets/background/space-ship.gif')).convert_alpha() # Using same image for now
     bounty_enemy_image = pygame.transform.scale(bounty_enemy_image, (bounty_enemy_width, bounty_enemy_height))
     bounty_enemy_image = pygame.transform.flip(bounty_enemy_image, False, True)
-    # You might want to apply a color tint or load a completely different image for distinction
-    # For example, to tint:
-    # bounty_enemy_image.fill((0, 255, 0, 255), special_flags=pygame.BLEND_RGBA_MULT) # Tints green
     print("Bounty enemy image 'gspace-ship.gif loaded successfully (can be visually distinct).")
 except pygame.error as e:
     print(f"Error loading bounty enemy image: {e}")
@@ -170,25 +187,28 @@ except pygame.error as e:
     print(f"Error loading background image: {e}")
     print("Falling back to a black background.")
     background_image = None
+
 # --- Functions ---
 def load_high_score():
     """Load high score from file."""
     try:
-        with open(resource_path(HIGHSCORE_FILE), 'r') as file:
+        # Use the full, determined path for loading
+        with open(HIGHSCORE_FILE_PATH, 'r') as file:
             return int(file.read())
     except (IOError, ValueError):
+        # If the file doesn't exist or is empty/corrupt, return 0
         return 0
 
 def save_high_score(new_score):
     """Save high score to file."""
-    with open(resource_path(HIGHSCORE_FILE), 'w') as file:
+    # Use the full, determined path for saving
+    with open(HIGHSCORE_FILE_PATH, 'w') as file:
         file.write(str(new_score))
 
 def spawn_enemy():
     """Create a new regular enemy and add it to the enemies list."""
     x = random.randint(0, WIDTH - enemy_width)
     y = random.randint(-150, -40)
-    # Store enemy as a dictionary to differentiate types if needed, or use separate lists
     enemy_rect = pygame.Rect(x, y, enemy_width, enemy_height)
     enemies.append({'rect': enemy_rect, 'type': 'regular'})
 
@@ -201,7 +221,7 @@ def spawn_bounty_enemy():
     enemies.append({'rect': bounty_enemy_rect, 'type': 'bounty'})
 
 # --- Main Game Setup ---
-high_score = load_high_score()
+high_score = load_high_score() # Load the high score at startup
 player = pygame.Rect(WIDTH // 2 - player_width // 2, HEIGHT - 60, player_width, player_height)
 player_speed = 5
 bullets = []
@@ -363,7 +383,6 @@ while running:
     # This remains separate for regular enemies
     if score >= next_enemy_increase_score:
         # Check if we are not at 400+ score and if the current enemy count is reasonable
-        # This prevents an infinite increase of regular enemies if you want a cap
         current_regular_enemies = sum(1 for e in enemies if e['type'] == 'regular')
         if current_regular_enemies < 10: # Example cap for regular enemies
             spawn_enemy() # Spawn one more regular enemy immediately
@@ -459,7 +478,7 @@ while running:
 screen.fill(BLACK)
 
 if score > high_score:
-    save_high_score(score)
+    save_high_score(score) # Save the new high score
     high_score = score
     new_high_score_text = font.render("NEW High Score!", True, WHITE)
     screen.blit(new_high_score_text, (WIDTH // 2 - new_high_score_text.get_width() // 2, HEIGHT // 2 - 80))
